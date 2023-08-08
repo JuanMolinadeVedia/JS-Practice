@@ -1,13 +1,25 @@
 
-let numProd, namProd, priceProd, disProd, disPriceProd, descProd;
-function createProd(numProd, namProd, priceProd, disProd, twelvesInsPriceProd, descProd){
-  return `Product: ${numProd}
+let namProd, priceProd, disProd, descProd;
+function createProd(namProd, priceProd, disProd, descProd) {
+    return `
   Name: ${namProd}
-  Price: ${priceProd}
-  Discount: ${disProd}
-  Price with discount: ${priceProd-(priceProd*(disProd/100))}
-  Price with Installments: ${twelvesInsPriceProd}
+  Price: $${priceProd}
+  Discount: ${disProd}%
+  Price with discount: $${calculateTotalPrice(priceProd, disProd)}
+  Price in 12 installments: $${calculateInstalls(priceProd)} monthly
   Product description: ${descProd};
   `
 }
-createProd('1','Mac','60','20','85','pee')
+function calculateTotalPrice(priceProd, disProd) {
+    const totalPrice = priceProd - (priceProd * (disProd / 100));
+    return totalPrice;
+}
+function calculateInstalls(priceProd) {
+    const installments = priceProd / 12
+    return installments;
+}
+
+const mackbook = createProd(
+    'Mac', 1200, 20, 'Mackbook M1 re zarpada, comprala'
+)
+alert(mackbook)
