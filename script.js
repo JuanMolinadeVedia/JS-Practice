@@ -1,25 +1,25 @@
+class Auto {
+    constructor(name, price, type, kms) {
+        this.name = name
+        this.price = price
+        this.type = type
+        this.kms = kms
+    }
+}
+let listProduct = [];
 
-let namProd, priceProd, disProd, descProd;
-function createProd(namProd, priceProd, disProd, descProd) {
-    return `
-  Name: ${namProd}
-  Price: $${priceProd}
-  Discount: ${disProd}%
-  Price with discount: $${calculateTotalPrice(priceProd, disProd)}
-  Price in 12 installments: $${calculateInstalls(priceProd)} monthly
-  Product description: ${descProd};
-  `
-}
-function calculateTotalPrice(priceProd, disProd) {
-    const totalPrice = priceProd - (priceProd * (disProd / 100));
-    return totalPrice;
-}
-function calculateInstalls(priceProd) {
-    const installments = priceProd / 12
-    return installments;
-}
-
-const mackbook = createProd(
-    'Mac', 1200, 20, 'Mackbook M1 re zarpada, comprala'
+const bmw = new Auto(
+    'BMW E46 M3', 29990, "sedan", 506
 )
-alert(mackbook)
+const mercedes_benz = new Auto(
+    'mercedes_benz', 1539050, "fastback", 106
+)
+const audi = new Auto(
+    'audi', 158600, "sedan", 5843
+)
+listProduct.push(bmw)
+listProduct.push(mercedes_benz)
+listProduct.push(audi)
+console.log(listProduct)
+
+
