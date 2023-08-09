@@ -1,51 +1,40 @@
-// class Auto {
-//     constructor(name, price, type, kms) {
-//         this.name = name
-//         this.price = price
-//         this.type = type
-//         this.kms = kms
-//     }
-// }
-// let listProduct = [];
+let products = [];
 
-// const bmw = new Auto(
-//     'BMW E46 M3', 29990, "sedan", 506
-// )
-// const mercedes_benz = new Auto(
-//     'mercedes_benz', 1539050, "fastback", 106
-// )
-// const audi = new Auto(
-//     'audi', 158600, "sedan", 5843
-// )
-// listProduct.push(bmw)
-// listProduct.push(mercedes_benz)
-// listProduct.push(audi)
-// console.log(listProduct)
-
-
-function createAuto(name, price, type, kms) {
-    return {
-        name: name,
-        price: price,
-        type: type,
-        kms: kms
+function createProduct(title, description, price, img) {
+    let product = {
+        title,
+        description,
+        price,
+        img,
     };
+    return product;
+};
+
+function uploadProducts(product, array) {
+    array.push(product);
+    return array;
 }
 
-let listProduct = [];
+let admin = { name: 'admin', admin: true };
 
-const bmw = createAuto(
-    'BMW E46 M3', 29990, "sedan", 506
-);
-const mercedes_benz = createAuto(
-    'mercedes_benz', 1539050, "fastback", 106
-);
-const audi = createAuto(
-    'audi', 158600, "sedan", 5843
-);
+function login(user, password) {
+    if ( user === 'admin' && password === '1234') {
 
-listProduct.push(bmw);
-listProduct.push(mercedes_benz);
-listProduct.push(audi);
+        uploadProducts(
+            createProduct('Jordan', 'Jordan 4 Black Cat', 130000, 'img/jordan/4/black-cat.jpg'),
+            products
+        );
+        products.push(
+            createProduct('Puma', 'SlipStream Hi Blue', 52000, 'img/puma/slipstream/hi/blue.jpg')
+        )
 
-console.log(listProduct);
+    } else {
+        alert("Chancho culiao ")
+    }
+}
+
+let inputUser = prompt("Ingrese su nombre de usuario:");
+let inputPassword = prompt("Ingrese su contraseña:");
+login(inputUser, inputPassword);
+
+console.log(products);
