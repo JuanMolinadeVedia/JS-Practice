@@ -1,4 +1,4 @@
-let products = [];
+
 
 function createProduct(title, description, price, img) {
     let product = {
@@ -21,10 +21,11 @@ function addProduct() {
     let price = parseFloat(prompt("Enter the product price:"));
     let img = prompt("Enter the product image route (img/):");
 
-    products.push(createProduct(title, description, price, img));
+    array.push(createProduct(title, description, price, img));
 }
 
 function login(user, password) {
+    let products = [];
     if (user === 'admin' && password === '1234') {
         uploadProducts(
             createProduct('Jordan', 'Jordan 4 Black Cat', 130000, 'img/jordan/4/black-cat.jpg'),
@@ -36,7 +37,7 @@ function login(user, password) {
 
         let addMore = prompt("Do you wish add other product? (y/n)").toLowerCase();
         while (addMore === 'y') {
-            addProduct();
+            addProduct(products);
             addMore = prompt("Do you wish add other product? (y/n)").toLowerCase();
         }
 
@@ -48,7 +49,7 @@ function login(user, password) {
     }
 }
 
-function loginWithRetry(user, password, maxAttempts) {
+function loginWithRetry(maxAttempts) {
     let remainingAttempts = maxAttempts;
 
     while (remainingAttempts > 0) {
@@ -57,7 +58,7 @@ function loginWithRetry(user, password, maxAttempts) {
             return;
         } else {
             remainingAttempts--;
-            alert(`Incorrect credentials. You have ${remainingAttempts} tries left.`);
+            alert(`Incorrect credentials. You have ${remainingAttempts+1} tries left.`);
             user = prompt("Insert your user name:");
             password = prompt("Insert your password:");
         }
