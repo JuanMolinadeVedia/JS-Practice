@@ -26,8 +26,18 @@ function login(user, password) {
         );
         products.push(
             createProduct('Puma', 'SlipStream Hi Blue', 52000, 'img/puma/slipstream/hi/blue.jpg')
-        )
+        );
+        let addMore = prompt("¿Deseas agregar otro producto? (si/no)").toLowerCase();
+        while (addMore === 'si') {
+            let title = prompt("Ingrese el título del producto:");
+            let description = prompt("Ingrese la descripción del producto:");
+            let price = parseFloat(prompt("Ingrese el precio del producto:"));
+            let img = prompt("Ingrese la ruta de la imagen del producto (img/):");
 
+            products.push(createProduct(title, description, price, img));
+
+            addMore = prompt("¿Deseas agregar otro producto? (si/no)").toLowerCase();
+        };
     } else {
         alert("Chancho culiao ")
     }
