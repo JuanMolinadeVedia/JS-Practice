@@ -8,18 +8,24 @@ function createProduct(title, description, price, img) {
         img,
     };
     return product;
-};
+}
 
 function uploadProducts(product, array) {
     array.push(product);
     return array;
 }
 
-let admin = { name: 'admin', admin: true };
+function addProduct() {
+    let title = prompt("Enter the product title:");
+    let description = prompt("Enter the product description:");
+    let price = parseFloat(prompt("Enter the product price:"));
+    let img = prompt("Enter the product image route (img/):");
+
+    products.push(createProduct(title, description, price, img));
+}
 
 function login(user, password) {
-    if ( user === 'admin' && password === '1234') {
-
+    if (user === 'admin' && password === '1234') {
         uploadProducts(
             createProduct('Jordan', 'Jordan 4 Black Cat', 130000, 'img/jordan/4/black-cat.jpg'),
             products
@@ -27,24 +33,41 @@ function login(user, password) {
         products.push(
             createProduct('Puma', 'SlipStream Hi Blue', 52000, 'img/puma/slipstream/hi/blue.jpg')
         );
-        let addMore = prompt("¿Deseas agregar otro producto? (si/no)").toLowerCase();
-        while (addMore === 'si') {
-            let title = prompt("Ingrese el título del producto:");
-            let description = prompt("Ingrese la descripción del producto:");
-            let price = parseFloat(prompt("Ingrese el precio del producto:"));
-            let img = prompt("Ingrese la ruta de la imagen del producto (img/):");
 
-            products.push(createProduct(title, description, price, img));
+        let addMore = prompt("Do you wish add other product? (y/n)").toLowerCase();
+        while (addMore === 'y') {
+            addProduct();
+            addMore = prompt("Do you wish add other product? (y/n)").toLowerCase();
+        }
 
-            addMore = prompt("¿Deseas agregar otro producto? (si/no)").toLowerCase();
-        };
+        if (addMore === "n") {
+            console.log(products);
+        }
     } else {
-        alert("Chancho culiao ")
+        alert("Incorrect credentials");
     }
 }
 
-let inputUser = prompt("Ingrese su nombre de usuario:");
-let inputPassword = prompt("Ingrese su contraseña:");
-login(inputUser, inputPassword);
+function loginWithRetry(user, password, maxAttempts) {
+    let remainingAttempts = maxAttempts;
 
-console.log(products);
+    while (remainingAttempts > 0) {
+        if (user === 'admin' && password === '1234') {
+            login(user, password);
+            return;
+        } else {
+            remainingAttempts--;
+            alert(`Incorrect credentials. You have ${remainingAttempts} tries left.`);
+            user = prompt("Insert your user name:");
+            password = prompt("Insert your password:");
+        }
+    }
+
+    alert("You has exceded the tries, you have been blocked.");
+}
+
+const maxLoginAttempts = 3;
+let inputUser = prompt("Insert your user name:");
+let inputPassword = prompt("Insert your password:");
+
+loginWithRetry(inputUser, inputPassword, maxLoginAttempts);
