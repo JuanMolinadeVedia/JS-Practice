@@ -1,3 +1,10 @@
+const addProductButton = document.getElementById("addProductButton");
+
+addProductButton.addEventListener("click", function() {
+    addProduct(products);
+});
+let products = [];
+
 function createProduct(title, description, price, img) {
     let product = {
         title,
@@ -20,58 +27,78 @@ function addProduct(array) {
     let img = prompt("Enter the product image route (img/):");
 
     array.push(createProduct(title, description, price, img));
-
+    const productsJSON = JSON.stringify(array);
+    localStorage.setItem('products', productsJSON);
 }
 
-function login(user, password) {
-    let products = [];
-    if (user === 'admin' && password === '1234') {
-        uploadProducts(
-            createProduct('Jordan', 'Jordan 4 Black Cat', 130000, 'img/jordan/4/black-cat.jpg'),
-            products
-        );
-        products.push(
-            createProduct('Puma', 'SlipStream Hi Blue', 52000, 'img/puma/slipstream/hi/blue.jpg')
-        );
+function showProducts(array) {
+    let productsList = "Product List:\n";
+    for (let i = 0; i < array.length; i++) {
+        productsList += `Title: ${array[i].title}, Description: ${array[i].description}, Price: ${array[i].price}\n`;
+    }
+    alert(productsList);
+}
 
-        let addMore = prompt("Do you wish to add another product? (y/n)").toLowerCase();
-        while (addMore === 'y') {
-            addProduct(products);
-            addMore = prompt("Do you wish to add another product? (y/n)").toLowerCase();
-            const productsJSON = JSON.stringify(products);
-            localStorage.setItem('products', productsJSON);
+function mainMenu() {
+    let option = prompt(`Menu:
+        [0] - Salir
+        [1] - Cargar producto
+        [2] - Mostrar productos
+    `);
+
+    while (option !== "0") {
+        switch (option) {
+            case "1":
+                addProduct(products);
+                break;
+            case "2":
+                showProducts(products);
+                break;
+            default:
+                alert("Opción inválida. Intente nuevamente.");
+                break;
         }
 
-        if (addMore === "n") {
-            console.log(products);
-            const productsJSON = JSON.stringify(products);
-            localStorage.setItem('products', productsJSON);
-
-        }
-    } else {
-        alert("Incorrect credentials");
+        option = prompt(`Menu:
+            [0] - Salir
+            [1] - Cargar producto
+            [2] - Mostrar productos
+        `);
     }
 }
 
-function loginWithRetry(maxAttempts) {
-    let remainingAttempts = maxAttempts;
-    let inputUser = prompt("Insert your user name:");
-    let inputPassword = prompt("Insert your password:");
+mainMenu();
 
-    while (remainingAttempts > 0) {
-        if (inputUser === 'admin' && inputPassword === '1234') {
-            login(inputUser, inputPassword);
-            return;
-        } else {
-            remainingAttempts--;
-            alert(`Incorrect credentials. You have ${remainingAttempts + 1} tries left.`);
-            inputUser = prompt("Insert your user name:");
-            inputPassword = prompt("Insert your password:");
-        }
-    }
 
-    alert("You have exceeded the number of login attempts. You have been blocked.");
+// Resto de tu código ...
+
+function updateProductCard(product, cardElement) {
+    const titleElement = cardElement.querySelector("h3");
+    const descriptionElement = cardElement.querySelector(".description");
+    const priceElement = cardElement.querySelector(".price");
+    const imgElement = cardElement.querySelector(".imgs");
+
+    titleElement.textContent = product.title;
+    descriptionElement.textContent = product.description;
+    priceElement.textContent = `U$D: ${product.price}`;
+    imgElement.src = `./imgs/${product.img}`;
 }
 
-const maxLoginAttempts = 3;
-loginWithRetry(maxLoginAttempts);
+// Event listener para el botón "Add Product"
+addProductButton.addEventListener("click", function() {
+    addProduct(products);
+    updateProductCard(products[products.length - 1], productCards[products.length - 1]);
+});
+
+// Obtén todas las tarjetas de productos
+const productCards = document.querySelectorAll(".product-card");
+
+// Llama a la función para agregar productos al cargar la página
+addProduct(products);
+
+// Llama a la función para actualizar la tarjeta de productos con los datos iniciales
+for (let i = 0; i < products.length; i++) {
+    updateProductCard(products[i], productCards[i]);
+}
+
+// Resto de tu código ...
