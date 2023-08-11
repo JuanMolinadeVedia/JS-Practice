@@ -1,0 +1,26 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+.product-card-container{
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    margin: 30px;
+    gap: 1%;
+    border: 1px solid black;
+}
+.product-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid red; 
+    width: auto;
+    height: auto;
+    padding: 15px;
+    width: 100%;
+}
+.product-card img{
+    max-width: 100%;
+    height: auto;
+}
