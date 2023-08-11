@@ -17,6 +17,9 @@ document.getElementById("submit-button").addEventListener("click", function () {
         {
             username: "pepe", password: "el"
         },
+        {
+            username: "pepesand", password: "papadeindependiente"
+        },
     ];
 
     const userFound = users.find(user => user.username === username && user.password === password);
