@@ -1,9 +1,9 @@
 const addProductButton = document.getElementById("addProductButton");
-
-addProductButton.addEventListener("click", function() {
-    addProduct(products);
-});
 let products = [];
+window.addEventListener("load", function () {
+    products = JSON.parse(localStorage.getItem('products')) || [];
+    updateProductCards();
+});
 
 function createProduct(title, description, price, img) {
     let product = {
@@ -29,48 +29,21 @@ function addProduct(array) {
     array.push(createProduct(title, description, price, img));
     const productsJSON = JSON.stringify(array);
     localStorage.setItem('products', productsJSON);
+
+    const productCard = document.createElement("div");
+    productCard.classList.add("product-card");
+    productCard.innerHTML = `
+        <img class="imgs" src="./imgs/${img}" alt="">
+        <h3>${title}</h3>
+        <p class="description">${description}</p>
+        <p class="price">Precio: $${price.toFixed(2)}</p>
+    `;
+
+    const productCardContainer = document.querySelector(".product-card-container");
+    console.log(productCardContainer);
+    productCardContainer.appendChild(productCard);
 }
 
-function showProducts(array) {
-    let productsList = "Product List:\n";
-    for (let i = 0; i < array.length; i++) {
-        productsList += `Title: ${array[i].title}, Description: ${array[i].description}, Price: ${array[i].price}\n`;
-    }
-    alert(productsList);
-}
-
-function mainMenu() {
-    let option = prompt(`Menu:
-        [0] - Salir
-        [1] - Cargar producto
-        [2] - Mostrar productos
-    `);
-
-    while (option !== "0") {
-        switch (option) {
-            case "1":
-                addProduct(products);
-                break;
-            case "2":
-                showProducts(products);
-                break;
-            default:
-                alert("Opción inválida. Intente nuevamente.");
-                break;
-        }
-
-        option = prompt(`Menu:
-            [0] - Salir
-            [1] - Cargar producto
-            [2] - Mostrar productos
-        `);
-    }
-}
-
-mainMenu();
-
-
-// Resto de tu código ...
 
 function updateProductCard(product, cardElement) {
     const titleElement = cardElement.querySelector("h3");
@@ -80,25 +53,19 @@ function updateProductCard(product, cardElement) {
 
     titleElement.textContent = product.title;
     descriptionElement.textContent = product.description;
-    priceElement.textContent = `U$D: ${product.price}`;
+    priceElement.textContent = `Precio: $${product.price.toFixed(2)}`;
     imgElement.src = `./imgs/${product.img}`;
 }
 
-// Event listener para el botón "Add Product"
-addProductButton.addEventListener("click", function() {
-    addProduct(products);
-    updateProductCard(products[products.length - 1], productCards[products.length - 1]);
-});
-
-// Obtén todas las tarjetas de productos
 const productCards = document.querySelectorAll(".product-card");
 
-// Llama a la función para agregar productos al cargar la página
-addProduct(products);
-
-// Llama a la función para actualizar la tarjeta de productos con los datos iniciales
-for (let i = 0; i < products.length; i++) {
-    updateProductCard(products[i], productCards[i]);
+function updateProductCards() {
+    for (let i = 0; i < products.length; i++) {
+        updateProductCard(products[i], productCards[i]);
+    }
 }
 
-// Resto de tu código ...
+addProductButton.addEventListener("click", function () {
+    addProduct(products);
+    updateProductCards();
+});
