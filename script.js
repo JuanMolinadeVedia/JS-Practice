@@ -1,4 +1,9 @@
 const addProductButton = document.getElementById("addProductButton");
+
+function redirectToAnotherPage() {
+    window.location.href = "./add/add.html" ;
+}
+
 let products = [];
 
 window.addEventListener("load", function () {
@@ -71,6 +76,6 @@ function updateProductCards() {
     }
 }
 
-addProductButton.addEventListener("click", function () {
-    addProduct(products);  
-});
+//  addProductButton.addEventListener("click", function () {
+//      addProduct(products);  
+//  });
