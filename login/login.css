@@ -5,13 +5,12 @@ body {
     justify-content: center; 
     align-items: center; 
     height: 100vh; 
-    background: linear-gradient(180deg, #F95B2E 0%, #1E1E1E 100%);
+    background: linear-gradient(180deg, #0056b3 0%, #1E1E1E 100%);
     font-family: Arial, sans-serif; /* Agregar una fuente para el texto */
 }
 
 .container img {
-    width: 160px;
-    height: 160px;
+    max-height: 100px;
     flex-shrink: 0;
 }
 
@@ -60,15 +59,21 @@ input {
     gap: 10px;
     border: none;
     border-radius: 8px;
-    background: #F95B2E;
+    background-color: #007afd;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-#submit-button button:hover,
+#submit-button button:hover{
+    background-color: #0056b3;
+}
 input:hover {
-    background: #FF784D;
+    background-color: #0056b3;
+    color: whitesmoke;
+}
+input:hover::placeholder{
+    color: whitesmoke;
 }
 
 @media screen and (min-width: 768px) {
@@ -85,6 +90,5 @@ input:hover {
         width: 100%;
         display: flex;
         justify-content: center;
-
     }
 }
