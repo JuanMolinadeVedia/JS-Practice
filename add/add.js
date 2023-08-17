@@ -1,4 +1,5 @@
-const addProductButton = document.getElementById("addProductButton");
+const productForm = document.getElementById("productForm");
+const formContainer = document.querySelector(".form-container");
 
 let products = [];
 
@@ -17,50 +18,23 @@ function createProduct(title, description, price, img) {
     return product;
 }
 
-function uploadProducts(product, array) {
-    array.push(product);
-    return array;
-}
-
-function addProduct(array, price, img) {
-    let title = prompt("Enter the product title:");
-    let description = prompt("Enter the product description:");
+function addProduct(array) {
+    const title = productForm.title.value;
+    const description = productForm.description.value;
+    const price = parseFloat(productForm.price.value);
+    const img = productForm.img.value;
 
     array.push(createProduct(title, description, price, img));
     const productsJSON = JSON.stringify(array);
     localStorage.setItem('products', productsJSON);
 
     addProductCard(img, title, description, price);
+
+    productForm.reset(); // Reset the form after submission
+
+    // Actualizar las tarjetas de productos
+    updateProductCards();
 }
-
-
-function filtros() {
-    let validPrice = false;
-    let validImg = false;
-
-    while (!validPrice || !validImg) {
-        let price = parseFloat(prompt("Enter a positive numeric price:"));
-        if (!isNaN(price) && price >= 0) {
-            validPrice = true;
-        } else {
-            alert("Please enter a valid positive numeric price.");
-        }
-
-        let img = prompt("Enter a valid image file name (e.g., 'shoe-name.webp'):");
-        let imgRegExp = /\.webp$/i;
-        if (img.match(imgRegExp)) {
-            validImg = true;
-        } else {
-            alert("Please enter a valid image file name ('shoe name' .webp).");
-        }
-
-        if (validPrice && validImg) {
-            addProduct(products, price, img);
-            break;
-        }
-    }
-}
-
 
 function addProductCard(img, title, description, price) {
     const productCard = document.createElement("div");
@@ -76,18 +50,23 @@ function addProductCard(img, title, description, price) {
     productCardContainer.appendChild(productCard);
 }
 
-const productCards = document.querySelectorAll(".product-card");
-
 function updateProductCards() {
     const productCardContainer = document.querySelector(".product-card-container");
-    productCardContainer.innerHTML = ""; // Clear existing cards
+    productCardContainer.innerHTML = ""; // Limpiar las tarjetas existentes
 
-    for (let i = 0; i < products.length; i++) {
-        const product = products[i];
-        addProductCard(product.img, product.title, product.description, product.price);
+    if (products.length === 0) {
+        const noProductMessage = document.createElement("p");
+        noProductMessage.textContent = "No products added yet.";
+        productCardContainer.appendChild(noProductMessage);
+    } else {
+        for (let i = 0; i < products.length; i++) {
+            const product = products[i];
+            addProductCard(product.img, product.title, product.description, product.price);
+        }
     }
 }
 
-addProductButton.addEventListener("click", function () {
-    filtros();
+productForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    addProduct(products);
 });
