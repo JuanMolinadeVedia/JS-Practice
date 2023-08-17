@@ -1,15 +1,11 @@
 const addProductButton = document.getElementById("addProductButton");
 
-// function redirectToAnotherPage() {
-//     window.location.href = "./../index.html" ;
-// }
-
 let products = [];
 
 window.addEventListener("load", function () {
     products = JSON.parse(localStorage.getItem('products')) || [];
     updateProductCards();
-});2
+});
 
 function createProduct(title, description, price, img) {
     let product = {
@@ -26,11 +22,9 @@ function uploadProducts(product, array) {
     return array;
 }
 
-function addProduct(array) {
+function addProduct(array, price, img) {
     let title = prompt("Enter the product title:");
     let description = prompt("Enter the product description:");
-    let price = parseFloat(prompt("Enter the product price:"));
-    let img = prompt("Enter the product image route (img/):");
 
     array.push(createProduct(title, description, price, img));
     const productsJSON = JSON.stringify(array);
@@ -38,6 +32,35 @@ function addProduct(array) {
 
     addProductCard(img, title, description, price);
 }
+
+
+function filtros() {
+    let validPrice = false;
+    let validImg = false;
+
+    while (!validPrice || !validImg) {
+        let price = parseFloat(prompt("Enter a positive numeric price:"));
+        if (!isNaN(price) && price >= 0) {
+            validPrice = true;
+        } else {
+            alert("Please enter a valid positive numeric price.");
+        }
+
+        let img = prompt("Enter a valid image file name (e.g., 'shoe-name.webp'):");
+        let imgRegExp = /\.webp$/i;
+        if (img.match(imgRegExp)) {
+            validImg = true;
+        } else {
+            alert("Please enter a valid image file name ('shoe name' .webp).");
+        }
+
+        if (validPrice && validImg) {
+            addProduct(products, price, img);
+            break;
+        }
+    }
+}
+
 
 function addProductCard(img, title, description, price) {
     const productCard = document.createElement("div");
@@ -50,32 +73,21 @@ function addProductCard(img, title, description, price) {
     `;
 
     const productCardContainer = document.querySelector(".product-card-container");
-    // console.log(productCardContainer);
     productCardContainer.appendChild(productCard);
 }
 
-// function updateProductCard(product, cardElement) {
-//     const titleElement = cardElement.querySelector(".title");
-//     const descriptionElement = cardElement.querySelector(".description");
-//     const priceElement = cardElement.querySelector(".price");
-//     const imgElement = cardElement.querySelector(".imgs");
-
-//     titleElement.textContent = product.title;
-//     descriptionElement.textContent = product.description;
-//     priceElement.textContent = `Precio: $${product.price.toFixed(2)}`;
-//     imgElement.src = `./imgs/${product.img}`;
-// }
-
 const productCards = document.querySelectorAll(".product-card");
-// console.log(productCards);
 
 function updateProductCards() {
+    const productCardContainer = document.querySelector(".product-card-container");
+    productCardContainer.innerHTML = ""; // Clear existing cards
+
     for (let i = 0; i < products.length; i++) {
         const product = products[i];
         addProductCard(product.img, product.title, product.description, product.price);
     }
 }
 
- addProductButton.addEventListener("click", function () {
-     addProduct(products);  
- });
+addProductButton.addEventListener("click", function () {
+    filtros();
+});
