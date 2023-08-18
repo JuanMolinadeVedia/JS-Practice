@@ -222,3 +222,11 @@ body.dark-mode .product-card {
 .dark-mode-toggle input[type="checkbox"]:checked:before {
     transform: translateX(20px);
 }
+.dark-mode-toggle label {
+    margin-right: 5px;
+    color: #333;
+    /* Other styles */
+}
+body.dark-mode .dark-mode-toggle label {
+    color: whitesmoke;
+}

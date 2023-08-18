@@ -98,14 +98,16 @@ window.addEventListener("load", function () {
 
 const darkModeToggle = document.getElementById("darkModeToggle");
 const body = document.body;
+const darkModeToggleLabel = document.querySelector(".dark-mode-toggle label");
 
 darkModeToggle.addEventListener("change", function () {
     if (darkModeToggle.checked) {
         body.classList.add("dark-mode");
-        
+        darkModeToggleLabel.textContent = "Light Mode";
+        darkModeToggleLabel.classList.add("dark-mode-label"); // Add dark mode class
     } else {
         body.classList.remove("dark-mode");
+        darkModeToggleLabel.textContent = "Dark Mode";
+        darkModeToggleLabel.classList.remove("dark-mode-label"); // Remove dark mode class
     }
-    console.log(darkModeToggle.checked);
-
 });
