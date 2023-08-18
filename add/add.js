@@ -1,24 +1,19 @@
 
 
-// Define constants and selectors
 const addProductForm = document.getElementById("productForm");
 const goBackLink = document.querySelector(".button-container a");
 
-// Event listener for form submission
 addProductForm.addEventListener("submit", function (event) {
     event.preventDefault();
     addProductFromForm();
 });
 
-// Event listener for "Go Back" link
 goBackLink.addEventListener("click", function (event) {
     event.preventDefault();
-    // Navigate back to index.html
-    window.location.href = "./../index.html"; // Update the path as needed
+    window.location.href = "./../index.html"; 
 });
 
 
-// Function to add a product based on form input
 function addProductFromForm() {
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
@@ -41,13 +36,11 @@ function addProductFromForm() {
     saveProductsToLocalStorage();
 }
 
-// Function to save products to local storage
 function saveProductsToLocalStorage() {
     const productsJSON = JSON.stringify(products);
     localStorage.setItem('products', productsJSON);
 }
 
-// Function to create a product object
 function createProduct(title, description, price, img) {
     let product = {
         title,
@@ -58,16 +51,14 @@ function createProduct(title, description, price, img) {
     return product;
 }
 
-// Function to upload products to the array
 function uploadProducts(product, array) {
     array.push(product);
     return array;
 }
 
-// Function to update product cards on the page
 function updateProductCards() {
     const productCardContainer = document.querySelector(".product-card-container");
-    productCardContainer.innerHTML = ""; // Clear existing cards
+    productCardContainer.innerHTML = ""; 
 
     for (let i = 0; i < products.length; i++) {
         const product = products[i];
@@ -75,7 +66,6 @@ function updateProductCards() {
     }
 }
 
-// Function to add a product card to the container
 function addProductCard(img, title, description, price) {
     const productCard = document.createElement("div");
     productCard.classList.add("product-card");
@@ -90,10 +80,18 @@ function addProductCard(img, title, description, price) {
     productCardContainer.appendChild(productCard);
 }
 
-// Initialize products from local storage on page load
 window.addEventListener("load", function () {
     products = JSON.parse(localStorage.getItem('products')) || [];
     updateProductCards();
+
+    // Restore dark mode state
+    const savedDarkMode = localStorage.getItem("darkMode");
+    if (savedDarkMode === "enabled") {
+        body.classList.add("dark-mode");
+        darkModeToggle.checked = true;
+        darkModeToggleLabel.textContent = "Light Mode";
+        darkModeToggleLabel.classList.add("dark-mode-label");
+    }
 });
 
 const darkModeToggle = document.getElementById("darkModeToggle");
@@ -105,9 +103,11 @@ darkModeToggle.addEventListener("change", function () {
         body.classList.add("dark-mode");
         darkModeToggleLabel.textContent = "Light Mode";
         darkModeToggleLabel.classList.add("dark-mode-label"); // Add dark mode class
+        localStorage.setItem("darkMode", "enabled"); // Save dark mode state
     } else {
         body.classList.remove("dark-mode");
         darkModeToggleLabel.textContent = "Dark Mode";
         darkModeToggleLabel.classList.remove("dark-mode-label"); // Remove dark mode class
+        localStorage.removeItem("darkMode"); // Remove dark mode state
     }
 });

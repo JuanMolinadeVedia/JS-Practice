@@ -9,6 +9,13 @@ let products = [];
 window.addEventListener("load", function () {
     products = JSON.parse(localStorage.getItem('products')) || [];
     updateProductCards();
+    const savedDarkMode = localStorage.getItem("darkMode");
+    if (savedDarkMode === "enabled") {
+        body.classList.add("dark-mode");
+        darkModeToggle.checked = true;
+        darkModeToggleLabel.textContent = "Light Mode";
+        darkModeToggleLabel
+    }
 });
 
 function createProduct(title, description, price, img) {
@@ -88,9 +95,12 @@ darkModeToggle.addEventListener("change", function () {
         body.classList.add("dark-mode");
         darkModeToggleLabel.textContent = "Light Mode";
         darkModeToggleLabel.classList.add("dark-mode-label"); // Add dark mode class
+        localStorage.setItem("darkMode", "enabled"); // Save dark mode state
     } else {
         body.classList.remove("dark-mode");
         darkModeToggleLabel.textContent = "Dark Mode";
         darkModeToggleLabel.classList.remove("dark-mode-label"); // Remove dark mode class
+        localStorage.removeItem("darkMode"); // Remove dark mode state
     }
 });
+
