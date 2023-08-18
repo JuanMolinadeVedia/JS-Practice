@@ -79,7 +79,7 @@ body.dark-mode .product-details h3 {
     color: whitesmoke;
 }
 
-.product-details p {
+body.dark-mode .product-details p {
     margin: 0;
     color: #777;
     font-size: 1rem;
