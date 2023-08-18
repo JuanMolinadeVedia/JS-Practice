@@ -99,6 +99,15 @@ body.dark-mode .product-card {
     color: whitesmoke;
     box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
 }
+.dark-mode-toggle label {
+    margin-right: 5px;
+    color: #333;
+    /* Other styles */
+}
+body.dark-mode .dark-mode-toggle label {
+    color: whitesmoke;
+}
+
 .dark-mode-toggle input[type="checkbox"] {
     appearance: none;
     width: 40px;
